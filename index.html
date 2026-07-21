@@ -12,109 +12,65 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Segoe UI,Arial,sans-serif;
+    font-family:'Segoe UI',Arial,sans-serif;
 }
 
 body{
-
-    background:#071320;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
     height:100vh;
-
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#071320;
 }
 
 .clock{
-
-    width:380px;
-    height:380px;
-
-    border-radius:28px;
-
-    background:rgba(20,35,55,.85);
-
-    border:2px solid rgba(0,174,239,.55);
-
-    box-shadow:
-        0 0 30px rgba(0,174,239,.25);
-
+    width:300px;
+    height:300px;
+    background:rgba(18,32,48,.92);
+    border:1px solid rgba(0,174,239,.45);
+    border-radius:24px;
+    box-shadow:0 0 20px rgba(0,174,239,.20);
     display:flex;
-
     flex-direction:column;
-
     justify-content:center;
-
     align-items:center;
-
-    color:white;
-
 }
 
 .icon{
-
-    font-size:36px;
-
-    margin-bottom:18px;
-
+    font-size:26px;
+    margin-bottom:12px;
 }
 
 .day{
-
-    font-size:22px;
-
-    letter-spacing:3px;
-
-    color:#cfd8e6;
-
-    margin-bottom:8px;
-
+    color:#d7e6f5;
+    font-size:17px;
+    letter-spacing:2px;
+    margin-bottom:6px;
 }
 
 .date{
-
-    font-size:30px;
-
-    color:#1ea9ff;
-
-    margin-bottom:35px;
-
+    color:#1EAEFF;
+    font-size:22px;
+    margin-bottom:28px;
 }
 
-.time{
-
+.timeRow{
     display:flex;
-
     align-items:flex-end;
-
 }
 
 #time{
-
-    font-size:110px;
-
-    font-weight:300;
-
-    line-height:1;
-
     color:white;
-
+    font-size:72px;
+    font-weight:300;
+    line-height:1;
 }
 
 #ampm{
-
-    font-size:34px;
-
-    color:#1ea9ff;
-
-    margin-left:10px;
-
-    margin-bottom:18px;
-
+    color:#1EAEFF;
+    font-size:22px;
+    margin-left:8px;
+    margin-bottom:10px;
 }
 
 </style>
@@ -131,12 +87,9 @@ body{
 
 <div class="date" id="date"></div>
 
-<div class="time">
-
+<div class="timeRow">
 <div id="time"></div>
-
 <div id="ampm"></div>
-
 </div>
 
 </div>
@@ -145,56 +98,39 @@ body{
 
 function updateClock(){
 
-const now=new Date();
+const now = new Date();
 
-const days=[
-"Sunday",
-"Monday",
-"Tuesday",
-"Wednesday",
-"Thursday",
-"Friday",
-"Saturday"
+const dayNames = [
+"Sunday","Monday","Tuesday","Wednesday",
+"Thursday","Friday","Saturday"
 ];
 
-const months=[
-"January",
-"February",
-"March",
-"April",
-"May",
-"June",
-"July",
-"August",
-"September",
-"October",
-"November",
-"December"
+const monthNames = [
+"January","February","March","April","May","June",
+"July","August","September","October","November","December"
 ];
 
-let h=now.getHours();
+let hour = now.getHours();
+const minute = String(now.getMinutes()).padStart(2,"0");
+const ampm = hour >= 12 ? "PM" : "AM";
 
-let m=String(now.getMinutes()).padStart(2,"0");
+hour = hour % 12;
+if(hour === 0) hour = 12;
 
-let ap=h>=12?"PM":"AM";
+document.getElementById("time").textContent = hour + ":" + minute;
+document.getElementById("ampm").textContent = ampm;
 
-h=h%12;
+document.getElementById("day").textContent =
+dayNames[now.getDay()].toUpperCase();
 
-if(h==0) h=12;
-
-document.getElementById("time").innerHTML=h+":"+m;
-
-document.getElementById("ampm").innerHTML=ap;
-
-document.getElementById("day").innerHTML=days[now.getDay()].toUpperCase();
-
-document.getElementById("date").innerHTML=
-months[now.getMonth()]+" "+now.getDate()+", "+now.getFullYear();
+document.getElementById("date").textContent =
+monthNames[now.getMonth()] + " " +
+now.getDate() + ", " +
+now.getFullYear();
 
 }
 
 updateClock();
-
 setInterval(updateClock,1000);
 
 </script>
