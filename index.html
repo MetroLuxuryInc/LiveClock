@@ -1,76 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Digital Clock</title>
+<title>Scalable Digital Clock</title>
 
 <style>
+
+:root{
+
+    /* CHANGE ONLY THIS VALUE */
+
+    --widget-size:250px;
+
+    /* ---------------------- */
+
+    --bg:#071320;
+    --card:#162333;
+    --blue:#1EAEFF;
+
+}
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Segoe UI',Arial,sans-serif;
+    font-family:"Segoe UI",Arial,sans-serif;
 }
 
 body{
-    height:100vh;
+
+    background:var(--bg);
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
-    background:#071320;
+
+    height:100vh;
+
 }
 
 .clock{
-    width:240px;
-    height:240px;
-    background:rgba(18,32,48,.92);
-    border:1px solid rgba(0,174,239,.45);
-    border-radius:24px;
-    box-shadow:0 0 20px rgba(0,174,239,.20);
+
+    width:var(--widget-size);
+    height:var(--widget-size);
+
+    background:rgba(22,35,51,.95);
+
+    border-radius:calc(var(--widget-size)*.09);
+
+    border:1px solid rgba(30,174,255,.45);
+
+    box-shadow:
+        0 0 calc(var(--widget-size)*.08)
+        rgba(30,174,255,.22);
+
     display:flex;
+
     flex-direction:column;
+
     justify-content:center;
+
     align-items:center;
+
+    overflow:hidden;
+
 }
 
 .icon{
-    font-size:26px;
-    margin-bottom:12px;
+
+    font-size:calc(var(--widget-size)*.08);
+
+    margin-bottom:calc(var(--widget-size)*.03);
+
 }
 
 .day{
-    color:#d7e6f5;
-    font-size:17px;
+
+    color:white;
+
+    font-size:calc(var(--widget-size)*.055);
+
     letter-spacing:2px;
-    margin-bottom:6px;
+
+    margin-bottom:calc(var(--widget-size)*.015);
+
 }
 
 .date{
-    color:#1EAEFF;
-    font-size:22px;
-    margin-bottom:28px;
+
+    color:var(--blue);
+
+    font-size:calc(var(--widget-size)*.07);
+
+    margin-bottom:calc(var(--widget-size)*.08);
+
+    text-align:center;
+
 }
 
 .timeRow{
+
     display:flex;
+
     align-items:flex-end;
+
 }
 
 #time{
+
     color:white;
-    font-size:72px;
+
     font-weight:300;
+
     line-height:1;
+
+    font-size:calc(var(--widget-size)*.24);
+
 }
 
 #ampm{
-    color:#1EAEFF;
-    font-size:22px;
-    margin-left:8px;
-    margin-bottom:10px;
+
+    color:var(--blue);
+
+    font-size:calc(var(--widget-size)*.07);
+
+    margin-left:calc(var(--widget-size)*.02);
+
+    margin-bottom:calc(var(--widget-size)*.03);
+
 }
 
 </style>
@@ -88,8 +150,11 @@ body{
 <div class="date" id="date"></div>
 
 <div class="timeRow">
+
 <div id="time"></div>
+
 <div id="ampm"></div>
+
 </div>
 
 </div>
@@ -98,39 +163,43 @@ body{
 
 function updateClock(){
 
-const now = new Date();
+const now=new Date();
 
-const dayNames = [
+const days=[
 "Sunday","Monday","Tuesday","Wednesday",
 "Thursday","Friday","Saturday"
 ];
 
-const monthNames = [
-"January","February","March","April","May","June",
-"July","August","September","October","November","December"
+const months=[
+"January","February","March","April",
+"May","June","July","August",
+"September","October","November","December"
 ];
 
-let hour = now.getHours();
-const minute = String(now.getMinutes()).padStart(2,"0");
-const ampm = hour >= 12 ? "PM" : "AM";
+let h=now.getHours();
 
-hour = hour % 12;
-if(hour === 0) hour = 12;
+const m=String(now.getMinutes()).padStart(2,"0");
 
-document.getElementById("time").textContent = hour + ":" + minute;
-document.getElementById("ampm").textContent = ampm;
+const ap=h>=12?"PM":"AM";
 
-document.getElementById("day").textContent =
-dayNames[now.getDay()].toUpperCase();
+h=h%12;
 
-document.getElementById("date").textContent =
-monthNames[now.getMonth()] + " " +
-now.getDate() + ", " +
-now.getFullYear();
+if(h===0) h=12;
+
+document.getElementById("time").textContent=h+":"+m;
+
+document.getElementById("ampm").textContent=ap;
+
+document.getElementById("day").textContent=
+days[now.getDay()].toUpperCase();
+
+document.getElementById("date").textContent=
+months[now.getMonth()]+" "+now.getDate()+", "+now.getFullYear();
 
 }
 
 updateClock();
+
 setInterval(updateClock,1000);
 
 </script>
