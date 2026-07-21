@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Clock</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#06182c;
+color:white;
+}
+
+.clock{
+
+text-align:center;
+
+padding:60px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.08);
+
+box-shadow:0 0 40px rgba(0,174,239,.25);
+
+}
+
+#date{
+
+font-size:30px;
+
+margin-bottom:20px;
+
+color:#9ed9ff;
+
+}
+
+#time{
+
+font-size:90px;
+
+font-weight:bold;
+
+text-shadow:0 0 15px #00AEEF;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="clock">
+
+<div id="date"></div>
+
+<div id="time"></div>
+
+</div>
+
+<script>
+
+function updateClock(){
+
+const now=new Date();
+
+document.getElementById("date").innerHTML=
+
+now.toLocaleDateString('en-US',{
+
+weekday:'long',
+
+year:'numeric',
+
+month:'long',
+
+day:'numeric'
+
+});
+
+document.getElementById("time").innerHTML=
+
+now.toLocaleTimeString('en-US');
+
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+</script>
+
+</body>
+
+</html>
