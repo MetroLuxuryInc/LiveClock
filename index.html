@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,11 +10,8 @@
 
 :root{
 
-    /* CHANGE ONLY THIS VALUE TO RESIZE THE ENTIRE CLOCK */
-
+    /* CHANGE ONLY THIS VALUE */
     --widget-size:250px;
-
-    /* COLORS */
 
     --background:#071320;
     --card:#162333;
@@ -32,17 +28,11 @@
 }
 
 body{
-
-    background:var(--background);
-
     height:100vh;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
+    background:var(--background);
 }
 
 .clock{
@@ -56,17 +46,16 @@ body{
 
     border-radius:calc(var(--widget-size)*0.09);
 
-    box-shadow:
-        0 0 calc(var(--widget-size)*0.08)
-        rgba(30,174,255,.20);
+    box-shadow:0 0 calc(var(--widget-size)*0.08)
+               rgba(30,174,255,.18);
 
     display:flex;
-
     flex-direction:column;
 
-    justify-content:center;
-
+    justify-content:space-evenly;
     align-items:center;
+
+    padding:calc(var(--widget-size)*0.045);
 
 }
 
@@ -74,11 +63,11 @@ body{
 
     color:var(--text);
 
-    font-size:calc(var(--widget-size)*0.055);
+    font-size:calc(var(--widget-size)*0.052);
 
     letter-spacing:2px;
 
-    margin-bottom:calc(var(--widget-size)*0.01);
+    line-height:1;
 
 }
 
@@ -86,9 +75,9 @@ body{
 
     color:var(--accent);
 
-    font-size:calc(var(--widget-size)*0.068);
+    font-size:calc(var(--widget-size)*0.067);
 
-    margin-bottom:calc(var(--widget-size)*0.035);
+    line-height:1;
 
 }
 
@@ -98,17 +87,19 @@ body{
 
     align-items:flex-end;
 
+    line-height:1;
+
 }
 
 #time{
 
     color:var(--text);
 
-    font-size:calc(var(--widget-size)*0.245);
+    font-size:calc(var(--widget-size)*0.27);
 
     font-weight:300;
 
-    line-height:1;
+    line-height:.9;
 
 }
 
@@ -116,11 +107,11 @@ body{
 
     color:var(--accent);
 
-    font-size:calc(var(--widget-size)*0.065);
+    font-size:calc(var(--widget-size)*0.060);
 
     margin-left:calc(var(--widget-size)*0.02);
 
-    margin-bottom:calc(var(--widget-size)*0.03);
+    margin-bottom:calc(var(--widget-size)*0.018);
 
 }
 
@@ -150,57 +141,38 @@ body{
 
 function updateClock(){
 
-const now = new Date();
+const now=new Date();
 
-const days = [
-"Sunday",
-"Monday",
-"Tuesday",
-"Wednesday",
-"Thursday",
-"Friday",
-"Saturday"
+const days=[
+"Sunday","Monday","Tuesday","Wednesday",
+"Thursday","Friday","Saturday"
 ];
 
-const months = [
-"January",
-"February",
-"March",
-"April",
-"May",
-"June",
-"July",
-"August",
-"September",
-"October",
-"November",
-"December"
+const months=[
+"January","February","March","April",
+"May","June","July","August",
+"September","October","November","December"
 ];
 
-let hour = now.getHours();
+let hour=now.getHours();
 
-const minute = String(now.getMinutes()).padStart(2,"0");
+const minute=String(now.getMinutes()).padStart(2,"0");
 
-const ampm = hour >= 12 ? "PM" : "AM";
+const ampm=hour>=12?"PM":"AM";
 
-hour = hour % 12;
+hour=hour%12;
+if(hour===0) hour=12;
 
-if(hour === 0){
-    hour = 12;
-}
-
-document.getElementById("day").textContent =
+document.getElementById("day").textContent=
 days[now.getDay()].toUpperCase();
 
-document.getElementById("date").textContent =
-months[now.getMonth()] + " " +
-now.getDate() + ", " +
-now.getFullYear();
+document.getElementById("date").textContent=
+months[now.getMonth()]+" "+now.getDate()+", "+now.getFullYear();
 
-document.getElementById("time").textContent =
-hour + ":" + minute;
+document.getElementById("time").textContent=
+hour+":"+minute;
 
-document.getElementById("ampm").textContent =
+document.getElementById("ampm").textContent=
 ampm;
 
 }
