@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Digital Clock</title>
+<title>Compact Clock</title>
 
 <style>
 
@@ -13,7 +13,7 @@
     /* CHANGE ONLY THIS VALUE */
     --widget-size:250px;
 
-    --background:#071320;
+    --bg:#071320;
     --card:#162333;
     --accent:#1EAEFF;
     --text:#FFFFFF;
@@ -28,11 +28,17 @@
 }
 
 body{
-    height:100vh;
+
+    background:var(--bg);
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
-    background:var(--background);
+
+    height:100vh;
+
 }
 
 .clock{
@@ -42,26 +48,28 @@ body{
 
     background:rgba(22,35,51,.96);
 
-    border:1px solid rgba(30,174,255,.40);
-
     border-radius:calc(var(--widget-size)*0.09);
+
+    border:1px solid rgba(30,174,255,.40);
 
     box-shadow:0 0 calc(var(--widget-size)*0.08)
                rgba(30,174,255,.18);
 
     display:flex;
+
     flex-direction:column;
 
-    justify-content:space-evenly;
+    justify-content:center;
+
     align-items:center;
 
-    padding:calc(var(--widget-size)*0.045);
+    overflow:hidden;
 
 }
 
 .day{
 
-    color:var(--text);
+    color:white;
 
     font-size:calc(var(--widget-size)*0.052);
 
@@ -69,15 +77,23 @@ body{
 
     line-height:1;
 
+    margin:0;
+
+    padding:0;
+
 }
 
 .date{
 
     color:var(--accent);
 
-    font-size:calc(var(--widget-size)*0.067);
+    font-size:calc(var(--widget-size)*0.066);
 
     line-height:1;
+
+    margin:2px 0 0 0;
+
+    padding:0;
 
 }
 
@@ -89,13 +105,15 @@ body{
 
     line-height:1;
 
+    margin-top:2px;
+
 }
 
 #time{
 
-    color:var(--text);
+    color:white;
 
-    font-size:calc(var(--widget-size)*0.27);
+    font-size:calc(var(--widget-size)*0.29);
 
     font-weight:300;
 
@@ -107,11 +125,11 @@ body{
 
     color:var(--accent);
 
-    font-size:calc(var(--widget-size)*0.060);
+    font-size:calc(var(--widget-size)*0.055);
 
-    margin-left:calc(var(--widget-size)*0.02);
+    margin-left:4px;
 
-    margin-bottom:calc(var(--widget-size)*0.018);
+    margin-bottom:5px;
 
 }
 
@@ -128,11 +146,8 @@ body{
 <div class="date" id="date"></div>
 
 <div class="timeRow">
-
 <div id="time"></div>
-
 <div id="ampm"></div>
-
 </div>
 
 </div>
@@ -154,14 +169,13 @@ const months=[
 "September","October","November","December"
 ];
 
-let hour=now.getHours();
+let h=now.getHours();
+let m=String(now.getMinutes()).padStart(2,"0");
 
-const minute=String(now.getMinutes()).padStart(2,"0");
+const ap=h>=12?"PM":"AM";
 
-const ampm=hour>=12?"PM":"AM";
-
-hour=hour%12;
-if(hour===0) hour=12;
+h=h%12;
+if(h===0)h=12;
 
 document.getElementById("day").textContent=
 days[now.getDay()].toUpperCase();
@@ -170,10 +184,10 @@ document.getElementById("date").textContent=
 months[now.getMonth()]+" "+now.getDate()+", "+now.getFullYear();
 
 document.getElementById("time").textContent=
-hour+":"+minute;
+h+":"+m;
 
 document.getElementById("ampm").textContent=
-ampm;
+ap;
 
 }
 
